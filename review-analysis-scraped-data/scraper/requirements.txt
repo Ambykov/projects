@@ -1,0 +1,7 @@
+selenium>=4.0.0
+undetected-chromedriver>=3.0.0
+pandas>=1.5.0
+loguru>=0.7.0
+tqdm>=4.66.0
+openpyxl>=3.0.0
+webdriver-manager

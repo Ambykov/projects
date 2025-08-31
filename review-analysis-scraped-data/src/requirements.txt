@@ -1,0 +1,17 @@
+numpy
+pandas
+undefined
+scikit-learn
+matplotlib
+seaborn
+torch
+transformers>=4.5.0
+datasets
+colorlog
+openpyxl
+python-docx
+gensim
+pymorphy3
+tqdm
+fuzzywuzzy
+python-Levenshtein
