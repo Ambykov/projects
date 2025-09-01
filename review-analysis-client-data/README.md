@@ -55,15 +55,25 @@ review-analysis-client-data/
 ├── results/ # Итоговые результаты (в .gitignore)
 
 ├── reports/ # Отчёты по шагам работы
+
 ├── src/ # Основной код пайплайна
+
 │ ├── config.py
+
 │ ├── data_loader.py
+
 │ ├── decorators.py
+
 │ ├── main.py
+
 │ ├── preprocess.py
+
 │ ├── utils.py
+
 │ ├── classifiers/ # Модули классификаторов
+
 │ └── train_model/ # Скрипты для обучения моделей
+
 └── .gitignore # Игнорируемые файлы
 
 
