@@ -58,29 +58,53 @@
 
 ## 📁 Структура проекта
 review-analysis-scraped-data/
+
 ├── data/ # Сырые и обработанные данные
+
 ├── scraper/ # Парсеры
+
 │ ├── parse_seller_products.py # Парсинг всех артикулов продавца
+
 │ ├── reviews_parser.py # Парсинг отзывов по одному артикулу
+
 | ├── logs/ # Логи выполнения
+
 | ├── results/
+
 | | ├── reviews / # Результаты парсинга отзывов
+
 │ | └── sellers/  # Результаты парсинга артикулов
+
 | └── requirements.txt # Зависимости
+
 ├── src/ # Ядро пайплайна
+
 │ ├── config.py
+
 │ ├── data_loader.py
+
 │ ├── decorators.py
+
 │ ├── main.py
+
 │ ├── utils.py
+
 │ └── classifiers/ # Модули классификаторов
+
 ├── key_words/ # Словари ключевых фраз
+
 ├── logs/ # Логи (в .gitignore)
+
 ├── results/ # Итоговые результаты (в .gitignore)
+
 ├── processed/ # Промежуточные результаты (в .gitignore)
+
 ├── config.py # Настройки пайплайна
+
 ├── main.py # Главный скрипт: парсинг → анализ
+
 ├── requirements.txt # Зависимости
+
 └── README.md # Этот файл
 
 
