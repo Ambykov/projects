@@ -45,33 +45,19 @@ review-analysis-client-data/
 ├── data/ # Исходные данные (образцы)
 ├── key_words/ # Словари ключевых фраз
 ├── logs/ # Логи выполнения (в .gitignore)
-
 ├── models/ # Сохранённые модели (в .gitignore)
-
 ├── processed/ # Промежуточные результаты (в .gitignore)
-
 ├── results/ # Итоговые результаты (в .gitignore)
-
 ├── reports/ # Отчёты по шагам работы
-
 ├── src/ # Основной код пайплайна
-
 │ ├── config.py
-
 │ ├── data_loader.py
-
 │ ├── decorators.py
-
 │ ├── main.py
-
 │ ├── preprocess.py
-
 │ ├── utils.py
-
 │ ├── classifiers/ # Модули классификаторов
-
 │ └── train_model/ # Скрипты для обучения моделей
-
 └── .gitignore # Игнорируемые файлы
 
 ```
