@@ -58,4 +58,31 @@
 
 ---
 
+---
+
+## 🎙️ 4. Голосовой сервис распознавания речи (STT): gateway + SDK
+
+- **Папки:** `/stt-service` (gateway) + `/stt-sdk` (Python + TypeScript SDK)
+- **Описание:** Продакшен-сервис распознавания речи (Speech-to-Text) для русского языка. WebSocket + REST API, авторизация по API-ключу, метрики Prometheus. Построен как sidecar над **GigaSTT** (GigaAM v3 RNNT, INT8, CPU-only). Клиентские SDK — Python (backend) и TypeScript (браузер, AudioWorklet).
+- **Стек:** Python 3.11, FastAPI, uvicorn, websockets, httpx, Prometheus client, Docker, GigaSTT (Rust + ONNX Runtime), TypeScript, Vitest, AudioWorklet, pytest.
+- **Ключевое:**
+  - **Sidecar-паттерн:** модель `gigastt` в network namespace `stt-gateway` (loopback `127.0.0.1:9876`), снаружи недоступна — единая точка авторизации через gateway.
+  - **WebSocket:** long-lived клиентское соединение, per-utterance upstream к модели (GigaAM v3 не держит long-lived WS).
+  - **REST:** `POST /v1/transcribe` для batch-транскрипции.
+  - **Auth:** `AUTH_MODE=api_key`, Bearer/query token, constant-time compare.
+  - **Ошибки:** 4 in-session кода (`pool_unavailable`, `upstream_connect_failed`, `upstream_ready_timeout`, `upstream_recv_timeout`) + WS close codes (4401 / 4408 / 4429 / 1000).
+  - **Метрики:** 62 series `stt_gateway_*` (Prometheus, VictoriaMetrics).
+  - **SDK Python:** `STTClient.stream()` (one-connection-per-utterance), `WavAudioSource` / `MicAudioSource`, `RetryPolicy` (1s/2s/4s), typed `Timings`, 6 retryable-кодов. Python ≥ 3.11.
+  - **SDK TypeScript:** `Session` (long-lived WS + AudioWorklet), `startUtterance`/`endUtterance` (streaming, без retry) и `sendUtterance(chunks)` (buffered, retry 3×), typed errors (`permission_denied`, `worklet_load_failed`, `connection_timeout`). Browser-only.
+  - **Производительность:** WER 2.08% (MSC-ru), throughput 15.6–15.9 utt/s (pool=4), TTFT p50 ~240 мс на коротких фразах.
+- **Известные ограничения:**
+  - TTFT линейно растёт с длиной фразы (offline Conformer, ADR-0016). Для >5 сек — сегментация (VAD — planned).
+  - Overlapping не поддерживается (Gap 2) — ждать `final` перед следующей репликой.
+  - TS SDK не работает в Node.js (browser-only). Для backend — raw WebSocket (пример в `stt-sdk/typescript/examples/node/`).
+  - Лицензия GigaAM — commercial use требует отдельного договора (см. `stt-service/README.md` §«Зависимости и лицензии upstream»).
+
+👉 [stt-service/](stt-service/) — gateway (FastAPI, docker-compose, deploy)
+👉 [stt-sdk/](stt-sdk/) — Python + TypeScript SDK
+
+
 > 💡 Все проекты разработаны с учётом реальных требований: устойчивость к сбоям, логирование, читаемость кода и возможность интеграции в продакшен.
