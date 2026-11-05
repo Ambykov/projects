@@ -1,0 +1,49 @@
+
+services:
+  gigastt:
+    image: ghcr.io/ekhodzitsky/gigastt:2.22.0
+    volumes:
+      - gigastt-models:/home/gigastt/.gigastt/models
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9876/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  stt-gateway:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    image: stt-gateway:v0.1.0
+    ports:
+      - "127.0.0.1:8100:8000"
+    environment:
+      - GIGASTT_WS_URL=ws://gigastt:9876/v1/ws
+      - GIGASTT_REST_URL=http://gigastt:9876/v1/transcribe
+      - GIGASTT_HEALTH_URL=http://gigastt:9876/health
+      - GIGASTT_READY_URL=http://gigastt:9876/ready
+      - GATEWAY_HOST=0.0.0.0
+      - GATEWAY_PORT=8000
+      - AUTH_MODE=${AUTH_MODE:-api_key}
+      - API_KEY=${API_KEY:-change-me-in-production}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - MAX_CONCURRENT_SESSIONS=${MAX_CONCURRENT_SESSIONS:-20}
+      - MAX_UPLOAD_MB=${MAX_UPLOAD_MB:-10}
+      - SESSION_IDLE_TIMEOUT_SEC=${SESSION_IDLE_TIMEOUT_SEC:-30}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+      - PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME:-localhost}
+    depends_on:
+      gigastt:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx; httpx.get('http://127.0.0.1:8000/health', timeout=3).raise_for_status()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  gigastt-models:

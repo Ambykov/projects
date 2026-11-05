@@ -1,0 +1,27 @@
+# Test-only configuration for AUTH_MODE=none testing (D7)
+# Run with: docker compose -f docker-compose.yml -f docker-compose.test.yml up -d
+
+services:
+  stt-gateway-none:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    ports:
+      - "127.0.0.1:8101:8000"
+    environment:
+      - GIGASTT_WS_URL=ws://gigastt:9876/v1/ws
+      - GIGASTT_REST_URL=http://gigastt:9876/v1/transcribe
+      - GIGASTT_HEALTH_URL=http://gigastt:9876/health
+      - GATEWAY_HOST=0.0.0.0
+      - GATEWAY_PORT=8000
+      - AUTH_MODE=none
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - MAX_CONCURRENT_SESSIONS=${MAX_CONCURRENT_SESSIONS:-20}
+      - MAX_UPLOAD_MB=${MAX_UPLOAD_MB:-10}
+      - SESSION_IDLE_TIMEOUT_SEC=${SESSION_IDLE_TIMEOUT_SEC:-30}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+      - PUBLIC_HOSTNAME=${PUBLIC_HOSTNAME:-localhost}
+    depends_on:
+      gigastt:
+        condition: service_healthy
+    restart: unless-stopped
