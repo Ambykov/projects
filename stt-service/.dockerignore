@@ -1,53 +1,39 @@
-# Python
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# Python venvs / caches
+.venv/
+.venv-test/
+.venv-gateway/
 __pycache__/
 *.py[cod]
-*$py.class
 *.egg-info/
-*.so
-.Python
-.venv/
-venv/
-ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
-# Models
-models/
-~/.gigastt/models/
-stage1-gigastt-local/gigastt-offline/
+# Node
+node_modules/
+sdk/typescript/node_modules/
+sdk/typescript/dist/
 
-# Results (audio and large files)
-results/*.wav
-results/*.mp3
-results/models/
+# Project data (not needed in gateway image)
+audio-samples/
+results/
+docs/
+sdk/
+tests/
+scripts/
+stage1-gigastt-local/
+stage2-tone-local/
 
-# Audio samples (keep manifest.tsv only)
-audio-samples/commands/
-audio-samples/msc-ru/
+# Local env
+.env
+.env.local
 
-# State lock file (if using file-based locking)
-STATE.md.lock
-
-# IDE
+# Editor
 .idea/
 .vscode/
 *.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
-# Local gateway dev
-.venv-gateway/
-.env.local
-
-# Test environment
-.venv-test/
-results/load-test/
-.env
-~lock.*#
-
-# Python SDK build artifacts
-sdk/python/build/
