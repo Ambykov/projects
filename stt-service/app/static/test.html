@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>STT Gateway — Test</title>
+<style>
+body { font-family: sans-serif; max-width: 800px; margin: 2em auto; padding: 1em; }
+button { font-size: 1.2em; padding: 0.5em 1em; cursor: pointer; }
+#status { margin: 1em 0; padding: 0.5em; background: #f0f0f0; }
+#partial { color: #888; font-style: italic; }
+#final { font-weight: bold; font-size: 1.3em; }
+.row { margin: 0.5em 0; }
+#level-bar { display:inline-block; width:200px; height:20px; background:#eee; vertical-align:middle; }
+#level-bar > div { height:100%; width:0%; background:#4CAF50; transition:width 0.05s; }
+table { border-collapse:collapse; margin-top:0.5em; }
+table td { padding:4px 8px; border:1px solid #ddd; }
+h2 { margin:1em 0 0.5em; font-size:1.2em; }
+</style>
+</head>
+<body>
+<h1>STT Gateway — Test</h1>
+
+<div class="row">
+  <label>Token: <input id="token" value="testtoken" size="40"></label>
+</div>
+<div class="row">
+  <button id="start">Говорить</button>
+  <button id="stop" disabled>Стоп</button>
+</div>
+<div id="status">Готов</div>
+
+<div class="row">
+  <label>Уровень микрофона:</label>
+  <div id="level-bar"><div id="level-bar-inner"></div></div>
+  <span id="level-text">0</span>
+</div>
+
+<section id="recordings-history" style="margin-top:2em; border-top:1px solid #ccc; padding-top:1em;">
+  <h2>История записей (<span id="recordings-count">0</span>)</h2>
+  <div class="row">
+    <button id="delete-selected" disabled>Удалить выбранные</button>
+    <button id="clear-all" disabled>Очистить всё</button>
+  </div>
+  <ul id="recordings-list" style="list-style:none; padding:0; margin:0.5em 0;"></ul>
+  <div id="recordings-empty" style="color:#888; padding:1em;">Нет записей. Нажмите «Говорить», скажите фразу и нажмите «Стоп».</div>
+</section>
+
+<h2>Результат модели</h2>
+<div class="row">Partial: <span id="partial">—</span></div>
+<div class="row">Final: <span id="final">—</span></div>
+<div class="row">TTFP: <span id="ttfp">—</span></div>
+
+<h2>Статистика пайплайна</h2>
+<table>
+  <tr><td>Длительность записи:</td><td><span id="stat-duration">—</span></td></tr>
+  <tr><td>Размер аудио:</td><td><span id="stat-bytes">—</span></td></tr>
+  <tr><td>TTFP (до 1-го partial):</td><td><span id="stat-ttfp">—</span></td></tr>
+  <tr><td>TTFT (до final):</td><td><span id="stat-ttft">—</span></td></tr>
+  <tr><td>Сервер: upstream connect:</td><td><span id="stat-upstream-connect">—</span></td></tr>
+  <tr><td>Сервер: upstream first byte:</td><td><span id="stat-upstream-first-byte">—</span></td></tr>
+  <tr><td>Сервер: upstream final:</td><td><span id="stat-upstream-final">—</span></td></tr>
+</table>
+
+<script src="/static/test.js?v=5"></script>
+</body>
+</html>
