@@ -1,6 +1,6 @@
 # Node.js example: transcribe WAV via STT Gateway
 
-TS SDK (`stt-client`) is **browser-only** (uses `WebSocket`, `AudioContext`, `AudioWorklet`).
+TS SDK (`@company/stt-client`) is **browser-only** (uses `WebSocket`, `AudioContext`, `AudioWorklet`).
 For Node.js / backend integration — use the raw WebSocket protocol directly (same protocol as SDK).
 
 Spec: `docs/api/websocket.md`.
@@ -14,9 +14,9 @@ Spec: `docs/api/websocket.md`.
 
     STT_API_KEY=your-api-key node transcribe.mjs path/to/audio.wav
 
-For remote server (`<your-server>`), open SSH tunnel first:
+For remote server (`serverllm`), open SSH tunnel first:
 
-    ssh -N -L 8100:127.0.0.1:8100 user@<your-server-ip>
+    ssh -p 2222 -N -L 8100:127.0.0.1:8100 llmuser@192.168.0.45
 
 ## Expected output
 

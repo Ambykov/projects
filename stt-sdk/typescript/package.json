@@ -1,0 +1,23 @@
+{
+  "name": "@company/stt-client",
+  "version": "0.2.2",
+  "description": "TypeScript SDK for STT Gateway (WebSocket, browser)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}
