@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.so
+.Python
+.venv/
+venv/
+ENV/
+
+# Models
+models/
+~/.gigastt/models/
+stage1-gigastt-local/gigastt-offline/
+
+# Results (audio and large files)
+results/*.wav
+results/*.mp3
+results/models/
+
+# Audio samples (keep manifest.tsv only)
+audio-samples/commands/
+audio-samples/msc-ru/
+
+# State lock file (if using file-based locking)
+STATE.md.lock
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Local gateway dev
+.venv-gateway/
+.env.local
+
+# Test environment
+.venv-test/
+results/load-test/
+.env
+~lock.*#
+
+# Python SDK build artifacts
+sdk/python/build/
